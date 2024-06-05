@@ -35,18 +35,19 @@
                         <div class="p-2 bd-highlight">
                             <select class="form-select" aria-label="Indicador" v-model="indicador">
                                 <option value="uf">UF</option>
-                                <option value="ipc">IPC</option>
                                 <option value="utm">UTM</option>
                             </select>
                         </div>
                         <div class="p-2 bd-highlight">
-                            <input type="date" class="form-control" aria-label="Text input with segmented dropdown button" v-model="fecha">
+                            <select v-model="fecha" class="form-select">
+                                <option v-for="year in lastFiveYears" :value="year">{{ year }}</option>
+                            </select>
                         </div>
 
                     </div>
-
-
                     <!-- END BUSCADOR -->
+
+                    <!-- tabla -->
                     <table class="table" v-if="valores.length" id="datatable">
                         <thead>
                             <tr>

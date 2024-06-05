@@ -7,17 +7,27 @@ const app = Vue.createApp({
             title: "valores diarios SII",
             valores: {},
 
+            
+
             // valores form
             indicador: null,
             fecha: null,
 
+            selectedYear: new Date().getFullYear(), 
         }
 
     },
 
+    computed: {
+        lastFiveYears() {
+            const currentYear = new Date().getFullYear();
+            return Array.from({ length: 5 }, (_, index) => currentYear - index);
+        },
+    },
 
 
     mounted() {
+
     },
 
     methods: {
@@ -28,18 +38,7 @@ const app = Vue.createApp({
                 return;
             }
 
-            // Convertir la fecha de yyyy-mm-dd a dd-mm-yyyy
-            const [year, month, day] = this.fecha.split('-');
-            const fechaFormateada = `${day}-${month}-${year}`;
-
-            // Validar que la fecha esté en el formato dd-mm-yyyy
-            const regex = /^\d{2}-\d{2}-\d{4}$/;
-            if (!regex.test(fechaFormateada)) {
-                alert('La fecha debe estar en el formato dd-mm-yyyy');
-                return;
-            }
-
-            const url = `https://mindicador.cl/api/${this.indicador}/${year}`;
+            const url = `https://mindicador.cl/api/${this.indicador}/${this.fecha}`;
             try {
                 const response = await axios.get(url);
                 this.valores = [response.data]; // Almacenar los datos en un array para manejar múltiples valores
@@ -76,7 +75,8 @@ const app = Vue.createApp({
             
             // Construir la fecha formateada
             return `${day}-${month}-${year}`;
-          }
+        },
+
     },
 
 
